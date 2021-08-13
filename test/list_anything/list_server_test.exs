@@ -12,16 +12,18 @@ defmodule ListAnything.ListServerTest do
   end
 
   test "test get function" do
-    assert ListServer.get_all() == %{}
-
     ListServer.create("my list")
 
-    assert ListServer.get_all() ==
-             %{"my list" => %ListAnything.ListData{entries: []}}
+    assert ListServer.get("my list") == []
+
+    ListServer.add_entry("my list", "my entry")
+    ListServer.add_entry("my list", "another entry")
+
+    assert ListServer.get("my list") == ["another entry", "my entry"]
   end
 
   test "test add entry function" do
-    ListServer.get_all() == %{}
+    assert ListServer.get_all() == %{}
 
     ListServer.create("my list")
 
