@@ -43,8 +43,11 @@ defmodule ListAnything.ListServer do
   end
 
   def handle_call({:get, title}, _from, state) do
-    found_list = get_in(state, [title, Access.key(:entries), Access.all()])
-    {:reply, found_list, state}
+    # entries = get_in(state, [title, Access.key(:entries), Access.all()])
+
+    %{^title => %{entries: entries}} = state
+
+    {:reply, entries, state}
   end
 
   def handle_call({:create, title}, _from, state) do
